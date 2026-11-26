@@ -18,8 +18,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) return jsonError(403, "forbidden_origin");
 
-  const contentType = request.headers.get("content-type")?.toLowerCase() ?? "";
-  if (!contentType.startsWith("application/json")) {
+  const mediaType = (request.headers.get("content-type") ?? "").split(";", 1)[0].trim().toLowerCase();
+  if (mediaType !== "application/json") {
     return jsonError(415, "unsupported_media_type");
   }
 

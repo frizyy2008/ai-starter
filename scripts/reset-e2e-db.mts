@@ -1,10 +1,14 @@
 import { rmSync } from "node:fs";
+import path from "node:path";
 
 const dbPath = process.env.DATABASE_PATH ?? "";
-if (!dbPath.includes("e2e")) {
-  throw new Error(`reset-e2e-db: отказ, DATABASE_PATH не похож на e2e-базу: "${dbPath}"`);
+const resolved = path.resolve(dbPath);
+const expected = path.resolve(process.cwd(), "data", "e2e.sqlite");
+
+if (!dbPath || resolved !== expected) {
+  throw new Error(`reset-e2e-db: отказ, разрешён сброс только ${expected}`);
 }
 for (const suffix of ["", "-wal", "-shm"]) {
-  rmSync(dbPath + suffix, { force: true });
+  rmSync(resolved + suffix, { force: true });
 }
-console.log(`e2e-база очищена: ${dbPath}`);
+console.log(`e2e-база очищена: ${resolved}`);

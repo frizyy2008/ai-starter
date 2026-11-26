@@ -15,7 +15,7 @@ export async function signUpUser(): Promise<{ cookie: string; email: string }> {
       body: JSON.stringify({ name: "Test", email, password: PASSWORD }),
     }),
   );
-  if (!res.ok) throw new Error(`sign-up failed: ${res.status} ${await res.text()}`);
+  if (!res.ok) throw new Error(`sign-up failed: ${res.status}`);
   const cookie = res.headers
     .getSetCookie()
     .map((c) => c.split(";")[0])
