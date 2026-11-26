@@ -1,0 +1,36 @@
+[1mdiff --git a/eslint.config.mjs b/eslint.config.mjs[m
+[1mindex 05e726d..e22f4ff 100644[m
+[1m--- a/eslint.config.mjs[m
+[1m+++ b/eslint.config.mjs[m
+[36m@@ -11,6 +11,9 @@[m [mconst eslintConfig = defineConfig([[m
+     ".next/**",[m
+     "out/**",[m
+     "build/**",[m
+[32m+[m[32m    "drizzle/**",[m
+[32m+[m[32m    "playwright-report/**",[m
+[32m+[m[32m    "test-results/**",[m
+     "next-env.d.ts",[m
+   ]),[m
+ ]);[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex c66de49..db3cf44 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -6,7 +6,16 @@[m
+     "dev": "next dev",[m
+     "build": "next build",[m
+     "start": "next start",[m
+[31m-    "lint": "eslint"[m
+[32m+[m[32m    "lint": "eslint",[m
+[32m+[m[32m    "typecheck": "next typegen && tsc --noEmit",[m
+[32m+[m[32m    "test": "vitest run",[m
+[32m+[m[32m    "quality": "npm run typecheck && npm run lint && npm run test",[m
+[32m+[m[32m    "db:generate": "drizzle-kit generate",[m
+[32m+[m[32m    "db:migrate": "node scripts/migrate.mts",[m
+[32m+[m[32m    "e2e:server": "node scripts/reset-e2e-db.mts && npm run db:migrate && next build && next start -p 3100"[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "engines": {[m
+[32m+[m[32m    "node": ">=26"[m
+   },[m
+   "dependencies": {[m
+     "@better-auth/drizzle-adapter": "^1.7.28",[m
